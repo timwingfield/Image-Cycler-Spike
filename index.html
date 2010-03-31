@@ -1,0 +1,53 @@
+<!DOCTYPE html> 
+<html> 
+<head> 
+<title>JQuery Cycle Plugin - Basic Demo</title> 
+<style type="text/css"> 
+.slideshow { height: 184px; width: 893px; margin: auto }
+.slideshow DIV IMG { margin: 130px 0 0 600px; }
+#slide1{ background: url('images/main_slide01.gif') no-repeat center bottom; height: 184px; width: 893px;}
+#slide2{ background: url('images/main_slide02.gif') no-repeat center bottom; height: 184px; width: 893px;}
+#slide3{ background: url('images/main_slide03.gif') no-repeat center bottom; height: 184px; width: 893px;}
+#nav {list-style-type: none; margin: auto; margin-left: 100px;}
+#nav LI { display: inline-block; float: left;}
+</style> 
+<!-- include jQuery library --> 
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script> 
+<!-- include Cycle plugin --> 
+<script src="scripts/jquery.cycle.min.js" type="text/javascript" charset="utf-8"></script>
+
+<script type="text/javascript"> 
+$.fn.cycle.updateActivePagerLink = function(pager, currSlideIndex) {
+		var slideNumber = currSlideIndex + 1;
+		var onSrc = $("#nav" + slideNumber).find("img").attr("src").match(/[^\.]+/) + "_on.gif";
+		var offSrc = $("#nav" + slideNumber).find("img").attr("src").replace("_on", "");
+		
+		$("#nav1").find('img').attr("src", offSrc);
+		$("#nav2").find('img').attr("src", offSrc);
+		$("#nav3").find('img').attr("src", offSrc);
+
+		$("#nav" + slideNumber).find('img').attr("src", onSrc);
+};
+
+$(document).ready(function() {
+    $('.slideshow').cycle({
+		fx: 'fade',
+		timeout: 3000, 
+    pager:  '#nav',
+    pagerAnchorBuilder: function(idx, slide) {
+				var myId = slide.id.substr(-1);
+        return '<li id="nav' + myId + '"><a href="#"><img src="images/btn_slide0' + myId + '.gif"></a></li>';
+    }
+	});
+});
+</script> 
+</head> 
+<body> 
+	<div class="slideshow"> 
+		<div id="slide1"><a href="javascript:alert('learn analyst stuff')"><img src="images/btn_learn_analyst.gif" border="0" alt="Btn Learn Analyst"></a></div>
+		<div id="slide2"><a href="javascript:alert('learn content manager stuff')"><img src="images/btn_learn_content_mgr.gif" border="0" alt="Btn Learn Content Mgr"></a></div>
+		<div id="slide3"><a href="javascript:alert('learn media stuff')"><img src="images/btn_learn_media.gif" border="0" alt="Btn Learn Media"></a></div>
+	</div>
+	<ul id="nav"></ul>
+</body> 
+</html>
